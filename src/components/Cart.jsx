@@ -15,12 +15,24 @@ export default function Cart() {
     0
   );
 
+  function handleDecreaseQuantity(item) {
+    cartCtx.removeItem(item.id);
+  }
+  function handleIncreaseQuantity(item) {
+    cartCtx.addItem(item);
+  }
+
   return (
     <Modal className="cart" open={userProgressCtx.progress === "cart"}>
       <h2>Your Cart</h2>
       <ul>
         {cartCtx.items.map((item) => (
-          <CartItem key={item.id} item={item} />
+          <CartItem
+            key={item.id}
+            item={item}
+            onIncrease={() => handleIncreaseQuantity(item)}
+            onDecrease={() => handleDecreaseQuantity(item)}
+          />
         ))}
       </ul>
       <p className="cart-total">{currencyFormatter.format(cartTotal)}</p>
