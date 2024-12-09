@@ -15,13 +15,6 @@ export default function Cart() {
     0
   );
 
-  function handleDecreaseQuantity(item) {
-    cartCtx.removeItem(item.id);
-  }
-  function handleIncreaseQuantity(item) {
-    cartCtx.addItem(item);
-  }
-
   return (
     <Modal className="cart" open={userProgressCtx.progress === "cart"}>
       <h2>Your Cart</h2>
@@ -30,8 +23,8 @@ export default function Cart() {
           <CartItem
             key={item.id}
             item={item}
-            onIncrease={() => handleIncreaseQuantity(item)}
-            onDecrease={() => handleDecreaseQuantity(item)}
+            onIncrease={() => cartCtx.addItem(item)}
+            onDecrease={() => cartCtx.removeItem(item.id)}
           />
         ))}
       </ul>
@@ -40,7 +33,7 @@ export default function Cart() {
         <Button textOnly onClick={userProgressCtx.hideCart}>
           Close
         </Button>
-        <Button>Go to Checkout</Button>
+        {cartTotal > 0 && <Button>Go to Checkout</Button>}
       </p>
     </Modal>
   );
