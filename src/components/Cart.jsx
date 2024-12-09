@@ -33,7 +33,11 @@ export default function Cart() {
         <Button textOnly onClick={userProgressCtx.hideCart}>
           Close
         </Button>
-        {cartTotal > 0 && <Button>Go to Checkout</Button>}
+        {cartTotal > 0 && (
+          <Button onClick={() => userProgressCtx.showCheckout()}>
+            Go to Checkout
+          </Button>
+        )}
       </p>
     </Modal>
   );
