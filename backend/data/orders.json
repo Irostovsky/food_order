@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "items": [
+      {
+        "id": "m2",
+        "name": "Margherita Pizza",
+        "price": "12.99",
+        "description": "A classic pizza with fresh mozzarella, tomatoes, and basil on a thin and crispy crust.",
+        "image": "images/margherita-pizza.jpg",
+        "quantity": 2
+      }
+    ],
+    "customer": {
+      "name": "Ivan Rostovsky",
+      "email": "ivan.rostovsky@guestready.com",
+      "street": "Горького 161",
+      "postal-code": "83000",
+      "city": "Донецк"
+    },
+    "id": "202.53422700090806"
+  },
+  {
+    "items": [
+      {
+        "id": "m2",
+        "name": "Margherita Pizza",
+        "price": "12.99",
+        "description": "A classic pizza with fresh mozzarella, tomatoes, and basil on a thin and crispy crust.",
+        "image": "images/margherita-pizza.jpg",
+        "quantity": 2
+      }
+    ],
+    "customer": {
+      "name": "Ivan Rostovsky",
+      "email": "ivan.rostovsky@guestready.com",
+      "street": "Горького 161",
+      "postal-code": "83000",
+      "city": "Донецк"
+    },
+    "id": "268.38442471897486"
+  }
+]
