@@ -6,6 +6,7 @@ import { currencyFormatter } from "../util/formatting";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import useHttp from "../hooks/useHTTP";
+import Error from "./Error";
 
 const requestConfig = {
   method: "POST",
@@ -23,6 +24,7 @@ export default function Checkout() {
     isLoading: isSending,
     error,
     sendRequest,
+    clearData,
   } = useHttp("http://localhost:3000/orders", requestConfig);
   const cartTotal = cartCtx.items.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -43,9 +45,36 @@ export default function Checkout() {
     );
   }
 
+  function handleClose() {
+    userProgressCtx.hideCheckout();
+  }
+
+  function handleFinish() {
+    userProgressCtx.hideCheckout();
+    cartCtx.clearCart();
+    clearData();
+  }
+
+  if (data && !error) {
+    return (
+      <Modal
+        open={userProgressCtx.progress === "checkout"}
+        onClose={handleFinish}
+      >
+        <h2>Success!</h2>
+        <p>Your order was submitted successfully!</p>
+        <p className="modal-actions">
+          <Button type="button" textOnly onClick={handleFinish}>
+            Okay
+          </Button>
+        </p>
+      </Modal>
+    );
+  }
+
   let actions = (
     <>
-      <Button type="button" textOnly onClick={userProgressCtx.hideCheckout}>
+      <Button type="button" textOnly onClick={handleClose}>
         Close
       </Button>
       <Button>Submit Order</Button>
@@ -55,11 +84,9 @@ export default function Checkout() {
   if (isSending) {
     actions = <span>Order is submitting...</span>;
   }
+
   return (
-    <Modal
-      open={userProgressCtx.progress === "checkout"}
-      onClose={userProgressCtx.hideCheckout}
-    >
+    <Modal open={userProgressCtx.progress === "checkout"} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <h2>Checkout</h2>
         <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
@@ -71,6 +98,7 @@ export default function Checkout() {
           <Input label="Postal Code" type="text" id="postal-code" />
           <Input label="City" type="text" id="city" />
         </div>
+        {error && <Error title="Failed to submit order" message={error} />}
         <p className="modal-actions">{actions}</p>
       </form>
     </Modal>
